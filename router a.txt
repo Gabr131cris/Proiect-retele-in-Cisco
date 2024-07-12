@@ -1,0 +1,41 @@
+ip dhcp excluded-address 192.168.2.1
+
+ip dhcp pool 10
+network 192.168.2.0 255.255.255.240
+default-router 192.168.2.1
+
+interface FastEthernet0/0.10
+encapsulation dot1Q 10
+ip address 192.168.2.1 255.255.255.240
+
+ip dhcp excluded-address 192.168.2.33
+
+ip dhcp pool 20
+network 192.168.2.32 255.255.255.224
+default-router 192.168.2.33
+
+interface FastEthernet0/0.20
+encapsulation dot1Q 20
+ip address 192.168.2.33 255.255.255.224
+
+ip dhcp excluded-address 192.168.2.65
+
+ip dhcp pool 30
+network 192.168.2.64 255.255.255.240
+default-router 192.168.2.65
+
+interface FastEthernet0/0.30
+encapsulation dot1Q 30
+ip address 192.168.2.65 255.255.255.240
+
+interface FastEthernet4/0
+ip address 192.168.1.145 255.255.255.252
+
+router ospf 1
+network 192.168.2.0 0.0.0.15 area 0
+network 192.168.2.32 0.0.0.31 area 0
+network 192.168.2.64 0.0.0.15 area 0
+network 192.168.2.144 0.0.0.3 area 0
+
+access-list 110 deny ip 192.168.2.64 0.0.0.15 192.168.2.0 0.0.0.15
+access-list 110 permit ip any any
